@@ -1,0 +1,153 @@
+@mixin main-content(){
+	margin: 0 auto;
+	width: 1170px;
+
+	@media screen and (max-width: 1250px){
+		max-width: 85vw;			
+	}
+} 
+
+@mixin size($width, $height){
+    width: $width;
+    height: $height;
+}
+
+@mixin background($img){
+	background-image: url('#{$img-path}/#{$img}');
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+@mixin title($color){
+	font-size: 30px;
+	font-weight: lighter;
+	color: $color;
+	text-transform: uppercase;
+	position: relative;
+	padding-top: 72px;
+	font-family: Segoe UI;
+
+	&:before{
+		position:absolute;
+		content:'';
+		width: 45px;
+		height: 2px;
+		background-color: ($color);
+		bottom: 0;
+		transform: translate(2px, 3px);
+	}
+
+	@include breakpoint(laptop){
+		padding-top: 30px;	
+		margin-bottom: 25px;	
+	}
+}
+
+@mixin text($font-size, $font-weight, $text-transform, $color){
+	font-size: $font-size;
+	font-weight: $font-weight;
+	text-transform: $text-transform;
+	color: $color;
+	font-family: Segoe UI;
+}
+
+@mixin flex($flex-direction, $justify-content){
+	display: flex;	
+	flex-wrap: wrap;
+	align-content: center;
+	align-items: center;
+	flex-direction: $flex-direction;
+	justify-content: $justify-content;
+}
+
+@mixin absolute(){
+	position: absolute;
+	content: '';
+}
+
+@mixin transition-default(){
+	transition-duration: .3s;
+    transition-timing-function: linear;
+}
+
+@mixin border($border-color){
+	border-width: 2px;
+	border-style: solid;
+	border-color: $border-color;
+}
+
+@mixin border-invisible(){
+	border-width: 2px;
+	border-style: solid;
+	border-color: rgba(255, 255, 255, 0);
+}
+
+@mixin blue-hover(){
+	&:hover{
+		color: $light-blue;
+		border: 2px solid $light-blue;
+		cursor: pointer;
+		@include transition-default;
+
+		@include breakpoint(tablet-small){
+			border: 2px solid rgba(255,255,255,0);
+			color: $light-grey;
+		}		
+	}
+}
+
+@mixin white-hover(){
+	&:hover{
+		color: #fff;	
+		border-color: #fff;
+		cursor: pointer;
+		@include transition-default;	
+
+		@include breakpoint(tablet-small){
+			color: $light-grey;
+		}	
+	}
+}
+
+@mixin contact-fields(){
+	border: 2px solid #fff;
+	outline: none;
+	padding-left: 15px;
+	background-color: rgba(255, 255, 255, 0);
+	font-size: 15px;
+	color: #fff;
+}
+
+/*MIXINS FOR RESPONSIVE */
+@mixin breakpoint($point){
+	@if $point == laptop{
+		@media (max-width: 1200px){ @content ; }
+	}  
+
+	@else if $point == tablet{
+		@media (max-width: 1024px){ @content ; }
+	}
+
+	@else if $point == tablet-small{
+		@media (max-width: 768px){ @content ; }
+	}
+
+	@else if $point == phone{
+		@media (max-width: 640px){ @content ; }
+	}	
+
+	@else if $point == phone-small{
+		@media (max-width: 460px){ @content ; }
+	}
+
+	@else if $point == mobileonly{
+		@media (max-width: 320px){ @content ; }
+	}
+}
+
+@mixin no-translate($point){
+	@include breakpoint($point){
+		transform: translate(0, 0);
+	}
+}

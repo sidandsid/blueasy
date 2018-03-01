@@ -1,0 +1,1026 @@
+@import 'variables';
+@import 'mixins';
+
+*{
+	margin:0;
+	box-sizing: border-box;	
+}
+
+body{
+	background-color: $light-grey;
+	overflow-y: hidden;
+}
+
+a{
+	text-decoration: none;
+	cursor: pointer;
+}
+
+ul{
+	list-style: none;
+}
+
+.global-wrapper{
+	position: relative;
+	width: 100%;
+	max-width: 1920px;
+	background-color: #fff;
+	overflow-y: hidden;
+}
+
+/* PARALLAX */
+.parallax-wrapper{ 
+	@include size(100%, 100vh); 
+    perspective: 3px;
+   	overflow-x: hidden; 
+  	overflow-y: auto;
+}
+
+.parallax:after{  
+	@include absolute();
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0; 
+	transform: translateZ(.9px) scale(1.45); 
+	z-index: -1;
+}
+
+.parallax-top-section:after{
+	@include background('banner-1.jpg');
+}
+
+.parallax-middle-section:after{
+	@include background('banner-2.jpg');
+}
+
+.parallax-bottom-section:after{
+	@include background('banner-3.jpg');
+}
+
+/* HEADER */
+.header-wrapper{
+	position: relative;
+	position: sticky;
+	top: 0;	
+	@include flex(row, space-around);	
+	@include size(100%, 150px);
+	@include transition-default();
+	background-color: $main-grey;	
+	z-index: 3;
+
+	@include breakpoint(phone){
+		height: 100px;
+	}
+}
+
+.top-header{
+	@include main-content();	
+	@include flex(row, space-between);
+	transition: 1s;
+
+	@include breakpoint(phone){	
+		justify-content: flex-start;
+	}
+}
+
+.top-header-shrinking{
+	height: 50px;
+	@include transition-default();
+
+	@include breakpoint(tablet){
+		height: 80px;
+	}
+
+	@include breakpoint(phone){
+		height: 60px;
+	}
+}
+
+.top-logo{
+	@include text(30px, bold, uppercase, #fff);
+
+	span{
+		color: $light-blue;
+	}		
+}
+
+.top-nav{
+	width: 47%;	
+
+	@include breakpoint(laptop){
+		width: 70%;
+		margin-right: 5%;
+	}
+
+	@include breakpoint(tablet){
+		width: 100%;		
+		bottom: 0;
+		left: 0;
+		transform: translate(-8%, 0px);
+	}	
+
+	@include breakpoint(phone){
+		position: absolute;
+		transform: translate(-1000px, 120px);
+		width: 100%;
+		transition: .7s;
+	}
+
+	ul{		
+		@include flex(row, space-around);
+	
+		@include breakpoint(phone){
+			width: 100%;
+			padding: 0;
+		}		
+	}
+
+	li{
+		@include breakpoint(phone){
+			display: block;
+			@include flex(row, space-around);
+			height: 50px;
+			margin-bottom: 7px;
+			padding-top: 10px;
+			transform: translate(0, 0);
+			background-color: $main-grey;
+		}
+	}
+
+	a{	
+		display: block;		
+		@include flex(row, center);
+		@include size(88px, 33px);
+		@include text(14px, bold, uppercase, #fff);
+		@include border-invisible();
+		@include blue-hover();
+		@include transition-default();	
+		
+		@include breakpoint(tablet-small){
+			&:hover{
+				color: #fff;
+				opacity: 1;
+			}
+		}
+	}
+}	
+
+/* adjusting each item of top nav */
+.home-item{
+	transform: translate(11px, 0px);
+
+	@include breakpoint(phone){		
+		width: 25%;
+		border-width: 1px 0px 0px 1px;
+		border-style: solid;
+		border-color: $light-blue;
+	}
+}
+
+.services-item{
+	transform: translate(3px, 0px);
+
+	@include breakpoint(phone){		
+		width: 35%;
+		border-top: 1px solid $light-blue;
+	}
+}
+
+.features-item{
+	transform: translate(5px, 0px);
+
+	@include breakpoint(phone){		
+		width: 37%;
+		border-width: 1px 1px 0px 0px;
+		border-style: solid;
+		border-color: $light-blue;
+	}
+}
+
+.portfolio-item{
+	transform: translate(16px, 0px);
+
+	@include breakpoint(phone){		
+		width: 54%;
+		border-width: 0px 0px 1px 1px;
+		border-style: solid;
+		border-color: $light-blue;
+	}
+}
+
+.contact-item{
+	transform: translate(25px, 0px);
+
+	@include breakpoint(phone){
+		width: 44%;
+		border-width: 0px 1px 1px 0px; 
+		border-style: solid;
+		border-color: $light-blue;
+	}	
+}
+
+/* settings for mobile menu */
+.mobile-menu{
+	display: none;
+
+	@include breakpoint(phone){
+		display: block;
+		@include flex(row, space-around);
+		@include size(50px, 50px);	
+		margin-right: 10px;
+	}
+}
+
+.mobile-burger{		
+	display: block;
+	@include size(50px, 5px);
+	background-color: $light-blue;
+	border-radius: 5px;
+	@include transition-default();
+
+	&:before, &:after{
+		@include absolute;
+		@include size(50px, 5px);
+		background-color: $light-blue;
+		border-radius: 5px;	
+		transform: translate(0, -13px);
+		@include transition-default();
+	}
+
+	&:after{			
+		transform: translate(0, 13px);
+	}	
+}
+
+.mobile-nav{
+	position: absolute;
+	display: block;
+	@include flex(row, space-around);
+	width: 100%;
+	transform: translate(0, 120px);
+	transition: .7s;
+	opacity: 1;
+}
+
+.mobile-menu-cross{
+	height: 0;
+
+	&:before{
+		transform: rotate(45deg);
+		@include transition-default();
+	}
+
+	&:after{
+		transform: rotate(-45deg);
+		@include transition-default();
+	}
+}
+
+/* TOP BANNER */
+.top-wrapper{
+	position: relative; 
+	height: 125vh;
+	min-height: 600px;
+	margin-top: -25vh;
+}
+
+.top-title{
+	@include text(42px, lighter, uppercase, #fff);
+	@include size(712px, 65px);
+	@include flex(column, space-around);
+	transform: translate(0, 50vh);
+	background-color: $main-grey;
+	margin: 0 auto;
+	padding: 0 0 3px 14px;
+
+	@include breakpoint(tablet){
+		font-size: 30px;
+		text-align: center;
+	}
+
+	@include breakpoint(phone){
+		font-size: 23px;
+	}
+
+	@include breakpoint(phone-small){
+		font-size: 21px;
+	}
+}
+
+.title-small{
+	@include breakpoint(tablet){
+		width: 520px;
+	}
+
+	@include breakpoint(phone){
+		width: 400px;
+	}
+
+	@include breakpoint(phone-small){
+		width: 300px;
+	}	
+}
+
+.title-big{
+	width: 990px;
+	margin-top: 13px;
+	padding: 0 0 7px;
+
+	@include breakpoint(tablet){
+		@include size(590px, 100px);		
+	}
+
+	@include breakpoint(phone){
+		@include size(440px, 80px);	
+	}
+
+	@include breakpoint(phone-small){
+		width: 310px;
+	}
+}
+
+/* SERVICES */
+.services-wrapper{
+	position: relative;
+	min-height: 405px;
+	background-color: $light-blue;
+
+	@include breakpoint(laptop){ 
+		padding-bottom: 30px;
+	}
+}
+
+.services-menu{
+	@include main-content();
+	@include flex(row, space-between);	
+}
+
+.services-block{
+	width: 280px;
+	min-height: 190px;	
+	margin-bottom: 20px;
+
+	@include breakpoint(laptop){
+		width: 45%;		
+		margin-bottom: 50px;
+	}
+
+	@include breakpoint(phone){
+		width: 100%;
+		margin-bottom: 20px;
+	}
+
+	@include breakpoint(phone-small){	
+		margin-bottom: 40px;
+	}
+	
+	&:last-child{
+		transform: translate(5px, 0);
+		@include no-translate(laptop);	
+	}
+}
+
+.services-icon{
+	height: 48px;
+	margin-bottom: 13px;
+}
+
+.services-title{
+	@include title(#fff);
+	width: 100%;
+	margin-bottom: 40px;
+}
+
+.services-subtitle{
+	@include text(24px, normal, uppercase, #fff);
+	margin-bottom: 10px;
+}
+
+.services-text{
+	@include text(12px, bold, none, #fff); 
+	line-height: 163%;
+
+	@include breakpoint(laptop){
+		font-size: 16px;
+		font-weight: normal;
+	}
+}
+
+/* PORTFOLIO */
+.portfolio-wrapper{
+	position: relative;
+	padding-bottom: 50px;
+
+	@include breakpoint(laptop){ 
+		padding-bottom: 30px;
+	}
+}
+
+.portfolio-menu{
+	@include main-content();	
+}
+
+.portfolio-title{
+	@include title($light-grey);
+	margin-bottom: 53px;
+
+	@include breakpoint(laptop){
+		margin-bottom: 0px;
+	}
+}
+
+.portfolio-filter{
+	display: block;
+	max-width: 550px;	
+	@include flex(row, space-between);
+	transform: translate(116%, -266%);
+
+	@include breakpoint(laptop){
+		margin: 20px 0;
+		transform: translate(0, 0);
+	}
+}
+
+/* adjusting MixItUp plugin default settings for filter buttons */
+.control{
+	@include text(14px, bold, uppercase, $light-grey);
+	height: 30px;
+	background-color: #fff;	
+	@include border-invisible();	
+	@include blue-hover();
+	@include transition-default();
+		
+	.all-button{
+		width: 60px;
+		transform: translate(-12px, 0);
+		@include no-translate(phone-small);
+	}
+
+	.portraits-button{
+		transform: translate(-3px, 0);	
+		@include no-translate(phone-small);		
+	}
+
+	.macro-button{
+		transform: translate(-5px, 0);
+		@include no-translate(phone-small);
+	}	
+
+	.journal-button{
+		transform: translate(-10px, 0);
+		@include no-translate(phone-small);			
+	}	
+}	
+
+.mixitup-control-active{
+    border: 2px solid $light-blue;
+    color: $light-blue;
+    outline: none;
+}
+
+.portfolio-list{
+	width: 1265px;	
+	margin: 0 auto;	
+
+	@include breakpoint(laptop){
+		width: 100%; 		
+	}
+
+	@include breakpoint(tablet-small){
+		text-align: center;			
+	}
+}
+
+.portfolio-list-item{
+	display: inline-block;		 
+}
+
+.portfolio-image{
+	filter: contrast(40%);
+	vertical-align: bottom;
+}
+
+/* adjusting MixItUp plugin default settings for filter items */
+.mix{
+	position: relative;  
+	display: block;	
+  	@include size(270px, 270px);  	
+    overflow: hidden;
+    visibility: hidden;
+    margin: 0 25px 26px 0;             
+
+	&:after{
+		position: absolute;
+		content:'+';
+		@include size(100%, 100%);
+		@include text(75px, lighter, none, #fff);			
+		top: 0;
+		padding: 83px 0 0 110px;
+		opacity: 0;		
+		@include transition-default();
+	}
+
+	&:hover::after{
+		opacity: 1;
+		background-color: rgba(62,71,78,0.9);
+		@include transition-default();
+
+		@include breakpoint(tablet-small){
+			opacity: 0;
+		}
+	}
+
+	@include breakpoint(laptop){
+    	margin: 0 0 10px 0;
+    }
+}
+
+.mixitup-ready .mix {
+    visibility: visible;   
+}
+
+/* DEFAULT */
+.default-wrapper{
+	position: relative;
+	@include flex(row, space-between);
+	height: 473px;
+	background-color: $light-grey;
+
+	@include breakpoint(laptop){ 
+		padding-bottom: 30px;
+		height: auto;
+	}
+}
+
+.default-menu{
+	@include main-content();
+	@include flex(row, space-between);	
+}
+
+.default-block{
+	@include size(40.5%, 100%);
+	
+	@include breakpoint(laptop){
+		width: 100%;
+	}
+
+	.default-title{
+		@include title(#fff);
+		transform: translate(0, -62px);
+
+		@include breakpoint(laptop){
+			transform: translate(0, 0);
+		}
+	}
+
+	.default-text{
+		@include text(14px, normal, none, #fff);
+		line-height: 170%;
+		margin-bottom: 27px;
+		transform: translate(0, -25px);
+
+		@include breakpoint(laptop){
+			transform: translate(0, 0);
+		}
+	}
+
+	.default-button{
+		display: block;
+		@include size(140px, 45px);
+		@include flex(row, space-around);
+		@include text(14px, bold, uppercase, #353f46);	
+		@include border(#353f46);
+		@include transition-default();
+		@include white-hover();		
+
+		@include breakpoint(laptop){
+			margin-bottom: 20px;
+		}	
+
+		@include breakpoint(tablet-small){
+			&:hover{
+				@include border(#353f46);
+				color: #353f46;
+			}
+		}
+	}
+}
+
+.default-video-wrapper{
+	position: relative;
+	@include size(48%, 0);	
+	padding-bottom: 56.25%;
+
+	@include breakpoint(laptop){
+		width: 100%;
+		@include flex(row, space-around);
+	}
+}
+
+.default-video{
+	position: absolute;
+	top: 0;
+	left: 0;
+	@include size(100%, 100%);
+}
+
+/* TWITTER */
+.twitter-wrapper{
+	position: relative;	
+	background-color: $light-blue;
+	padding-bottom: 75px;
+
+	@include breakpoint(laptop){ 
+		padding-bottom: 30px;
+	}
+	
+	.twitter-menu{
+		@include main-content();
+	}
+}
+
+.twitter-title{
+	@include title(#fff);
+	margin-bottom: 20px;
+
+	.fa{
+		position: absolute;
+		right: 0;
+		margin-top: 5px;
+	}
+}
+
+.twitter-text{
+	@include text (28px, lighter, none, #fff);	
+	line-height: 180%;
+
+	@include breakpoint(tablet-small){
+		font-size: 24px;
+	}
+}
+
+/* JOHN DOE */
+.john-wrapper{ 
+    position: relative;
+    height: 600px; 
+ 
+    @include breakpoint(tablet){
+        height: 700px;
+    }
+ 
+    @include breakpoint(phone-small){
+        height: 950px;
+    }
+} 
+ 
+.john-menu{
+    position: relative;
+    @include main-content();
+    @include flex(row, space-between);
+    transform: translate(0, 80px);
+}
+ 
+.john-title{
+    @include title(#fff);
+    width: 100%;
+    padding-top: 91px;
+    margin-bottom: 35px;
+ 
+    @include breakpoint(tablet){
+        padding-top: 30px;
+    }
+}
+ 
+.john-block{
+    @include size(49%, 200px);
+ 
+    @include breakpoint(tablet){
+        width: 100%;
+    }
+ 
+    @include breakpoint(phone){
+        margin-bottom: 70px;
+    }
+ 
+    @include breakpoint(phone-small){
+        margin-bottom: 150px;
+    }
+} 
+ 
+.john-text{
+    @include text(14px, normal, none, #fff);
+    line-height: 180%;
+    margin-bottom: 20px;
+}
+ 
+.john-icon{
+    display: inline-block;
+    @include size(65px, 65px);
+    @include text(30px, normal, none, #fff);
+    @include border(#fff);
+    margin: 23px 17px 0 0;
+    text-align: center; 
+    transform: translateY(-12px) scale(1.0) scaleZ(1.0) rotateY(0deg);
+    transition: 2s;
+     
+    .fa{
+        margin-top: 15px;
+        transform: rotateY(0deg);       
+        transition: .7s;    
+    }
+ 
+    &:hover{
+        transform: translateY(-12px) scale(1.0) scaleZ(1.0) rotateY(180deg);
+        transform-origin: 50% 0%;
+        perspective: 0;
+        perspective-origin: 0% 0%;
+        border-color: $light-blue;  
+        box-shadow: 2px 2px 20px 2px rgba(255,255,255,0.5);
+        transition: .7s;
+ 
+        @include breakpoint(tablet-small){
+            transform: translateY(-12px) scale(1.0) scaleZ(1.0) rotateY(0deg);
+            border-color: #fff;
+            box-shadow: 0px 0px 0px 0px;
+        }
+ 
+        .fa{    
+            transform: rotateY(180deg); 
+            color: $light-blue;
+            transition: .7s;
+ 
+            @include breakpoint(tablet-small){
+                transform: rotateY(0deg);
+                color: #fff; 
+            }
+        }
+    }
+}
+
+/* TESTIMONIALS */
+.testimonials-wrapper{
+	position: relative;
+	min-height: 360px;
+	background-color: #fff;
+
+	@include breakpoint(laptop){ 
+		padding-bottom: 30px;
+	}
+}
+
+.testimonials-menu{
+	position: relative;
+	@include main-content();
+}	
+
+.testimonials-title{
+	@include title($light-grey);
+	margin-bottom: 26px;
+
+	.testimonials-icon{
+		position: absolute;
+		display: block;
+		@include size(32px, 26px);
+		@include background('icon-5.png');			
+		right: 0;
+		transform: translate(0, -30px);
+
+		@include breakpoint(phone){
+			display: none;
+		}
+	}
+}
+
+.testimonials-text{
+	@include text(28px, lighter, none, $light-grey);
+	line-height: 180%;
+	margin-bottom: 28px;
+
+	@include breakpoint(phone-small){
+		font-size: 24px;
+	}
+}
+
+.testimonials-sign{
+	@include text(14px, bold, none, $light-blue);		
+}
+
+/* CONTACT */
+.contact-wrapper{	
+	position: relative;
+	height: 815px;	
+
+	@include breakpoint(tablet){
+        height: 1070px;
+    }
+ 
+    @include breakpoint(phone){
+        height: 1170px;
+    }
+}
+
+.contact-menu{	
+	@include main-content();
+	@include flex(row, space-between);
+}
+
+.contact-title{
+	@include title(#fff);
+	width: 100%;
+	margin-bottom: 35px;
+}
+
+.contact-subtitle{
+	@include text(14px, bold, uppercase, #fff);
+	margin-bottom: 7px;
+}
+
+.contact-fields{
+	width: 40.2%;
+	margin-bottom: 8px;
+	
+	@include breakpoint(tablet){
+		position: relative;
+		width: 100%;		
+		transform: translate(0, 250px);
+		margin-bottom: 30px;
+	}
+
+	@include breakpoint(phone){
+		transform: translate(0, 300px);
+	}
+
+	@include breakpoint(phone-small){
+		transform: translate(0, 360px);
+	}
+}
+
+.contact-text-block{
+	@include size(45%, 200px);
+	margin: 20px 48px 36px 0;
+
+	@include breakpoint(tablet){
+		position: relative;
+		width: 100%;		
+		transform: translate(0, -290px);
+	}
+
+	@include breakpoint(phone){
+		height: 260px;
+	}
+}
+
+.contact-message-block{	
+	width: 100%;
+	margin-top: -15px;
+
+	@include breakpoint(tablet){
+		width: 100%;
+	}
+
+	@include breakpoint(phone-small){
+		margin-top: 40px;
+	}
+}
+
+.contact-text{
+	@include text(14px, normal, none, #fff);
+	line-height: 185%;
+	margin-bottom: 25px;
+}
+
+.contact-field{
+ 	@include size(100%, 60px);  	
+ 	@include contact-fields;	
+ 	margin-bottom: 37px;
+
+ 	&:focus{
+ 		box-shadow: 0px 0px 5px 3px rgba(255,255,255,.5);
+ 	} 
+} 
+
+::-webkit-input-placeholder{ /* Chrome/Opera/Safari */
+  @include text(12px, normal, none, #fff);
+}
+
+::-moz-placeholder{ /* Firefox 19+ */
+  @include text(12px, normal, none, #fff);
+}
+
+:-ms-input-placeholder{ /* IE 10+ */
+  @include text(12px, normal, none, #fff);
+}
+
+:-moz-placeholder{ /* Firefox 18- */
+  @include text(12px, normal, none, #fff);
+}
+
+.contact-text-field{
+	@include size(100%, 220px); 	
+ 	@include contact-fields; 
+ 	margin-bottom: 39px;
+ 	padding: 15px;
+
+ 	&:focus{
+ 		box-shadow: 0px 0px 5px 3px rgba(255,255,255,.5);
+ 	} 
+}
+
+.contact-button{	
+	@include size(31.7%, 60px); 	
+	@include text(14px, bold, uppercase, #fff);
+	background-color: $light-blue;
+	border: none;
+	outline: none;
+	transition: .7s;
+
+	&:hover{
+		background-color: lighten($light-blue, 3%);
+		box-shadow: 1px 1px 40px 1px rgba(255,255,255,0.4);
+		transition: .7s;
+		cursor: pointer;
+
+		@include breakpoint(tablet-small){
+			background-color: $light-blue;
+			box-shadow: 0px 0px 0px 0px;
+		}		
+	}
+
+	@include breakpoint(phone){
+		@include size(40%, 50px);
+	}
+}
+
+/* FOOTER */
+.footer-wrapper{
+	height: 170px;
+	@include flex(row, space-between);
+	background-color: #353f47;	
+	transform: translate(0, 50px);
+ 
+    @include breakpoint(tablet){
+        transform: translate(0, 100px);
+    }
+ 
+    @include breakpoint(phone){
+        transform: translate(0, 120px);
+        @include flex(column, space-around);
+    }	
+}
+
+.footer{
+	@include main-content();
+	@include flex(row, space-between);
+		
+}
+
+.footer-nav{
+	margin-right: 55px;
+
+	ul{			
+		@include flex(row, space-between);				
+		width: 290px;	
+		padding: 0;
+		margin: 0;
+
+		a{
+			position: relative;
+			@include text(11.4px, bold, uppercase, $light-grey);
+			@include white-hover();
+			@include transition-default();					
+
+			&:before{
+				@include absolute();
+				@include size(100%, 1px);
+				background-color: #fff;
+				bottom: 0;
+				opacity: 0;	
+				transition: .25s;			
+			}
+		
+			&:after{
+				@include absolute();
+				@include size(2px, 12px);
+				background-color: $light-grey;
+				bottom: 0;
+				transform: translate(14px, 0px);
+			}			
+			
+			&:hover::before{
+				opacity: 1;
+				transform: translate(0, 4px);	
+				transition: .25s;	
+
+				@include breakpoint(tablet-small){
+					opacity: 0;
+				}
+			}
+		}
+	}
+}
+
+.footer-copyright{
+	@include text(11.4px, bold, uppercase, $light-grey);	
+	margin-right: 8px;			
+}
